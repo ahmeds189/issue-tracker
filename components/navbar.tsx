@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const routes = [
 	{ title: 'Dashboard', href: '/' },
-	{ title: 'Issues', href: '/Issues' },
+	{ title: 'Issues', href: '/issues' },
 ]
 
 const Navbar = () => {
