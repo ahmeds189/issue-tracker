@@ -1,6 +1,4 @@
 'use client'
-import Markdown from '@/components/Markdown'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -14,16 +12,19 @@ import Wrapper from '@/components/wrapper'
 import { newIssueSchema } from '@/lib/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
+import { LoaderIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useToast } from '@/components/ui/use-toast'
+import SimpleMDE from 'react-simplemde-editor'
+import 'easymde/dist/easymde.min.css'
 
 type Inputs = z.infer<typeof newIssueSchema>
 
 const NewIssue = () => {
 	const router = useRouter()
-	const [error, setError] = useState('')
+	const { toast } = useToast()
 
 	const form = useForm<Inputs>({
 		resolver: zodResolver(newIssueSchema),
@@ -33,30 +34,35 @@ const NewIssue = () => {
 		},
 	})
 
+	const {
+		handleSubmit,
+		control,
+		reset,
+		formState: { isSubmitting },
+	} = form
+
 	const onSubmit = async (date: Inputs) => {
 		try {
-			await axios.post('/api/issues', date)
+			await axios.post('/api/issuesweff', date)
 			router.push('/issues')
-			form.reset()
+			toast({
+				description: 'Your issue has been submitted.',
+			})
+			reset()
 		} catch (error) {
-			setError('an unexpected error occurred')
+			toast({
+				variant: 'destructive',
+				title: 'Uh oh! Something went wrong.',
+				description: `${error}`,
+			})
 		}
 	}
 	return (
 		<Wrapper>
-			{error && (
-				<Alert variant='destructive' className='max-w-xl mx-auto mb-6'>
-					<AlertTitle>Heads up!</AlertTitle>
-					<AlertDescription>{error}</AlertDescription>
-				</Alert>
-			)}
 			<Form {...form}>
-				<form
-					className='max-w-xl mx-auto'
-					onSubmit={form.handleSubmit(onSubmit)}
-				>
+				<form className='max-w-xl mx-auto' onSubmit={handleSubmit(onSubmit)}>
 					<FormField
-						control={form.control}
+						control={control}
 						name='title'
 						render={({ field }) => (
 							<FormItem>
@@ -71,12 +77,12 @@ const NewIssue = () => {
 					/>
 
 					<FormField
-						control={form.control}
+						control={control}
 						name='description'
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<Markdown />
+									<SimpleMDE placeholder='Description' {...field} />
 								</FormControl>
 								<div className='h-8 '>
 									<FormMessage />
@@ -85,7 +91,12 @@ const NewIssue = () => {
 						)}
 					/>
 
-					<Button type='submit'>Submit</Button>
+					<Button type='submit' disabled={isSubmitting}>
+						{isSubmitting ? 'Submitting' : 'Submit'}
+						{isSubmitting && (
+							<LoaderIcon className='animate-spin ml-2' size={20} />
+						)}
+					</Button>
 				</form>
 			</Form>
 		</Wrapper>
