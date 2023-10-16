@@ -16,15 +16,14 @@ import { LoaderIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { useToast } from '@/components/ui/use-toast'
 import SimpleMDE from 'react-simplemde-editor'
 import 'easymde/dist/easymde.min.css'
+import { toast } from 'sonner'
 
 type Inputs = z.infer<typeof newIssueSchema>
 
 const NewIssue = () => {
 	const router = useRouter()
-	const { toast } = useToast()
 
 	const form = useForm<Inputs>({
 		resolver: zodResolver(newIssueSchema),
@@ -43,18 +42,12 @@ const NewIssue = () => {
 
 	const onSubmit = async (date: Inputs) => {
 		try {
-			await axios.post('/api/issuesweff', date)
+			await axios.post('/api/issues', date)
 			router.push('/issues')
-			toast({
-				description: 'Your issue has been submitted.',
-			})
+			toast.success('Issue has been created')
 			reset()
 		} catch (error) {
-			toast({
-				variant: 'destructive',
-				title: 'Uh oh! Something went wrong.',
-				description: `${error}`,
-			})
+			toast.error(`${error}`)
 		}
 	}
 	return (

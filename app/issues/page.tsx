@@ -12,7 +12,7 @@ const Issue = () => {
 					href='/issues/new'
 					className={cn(
 						buttonVariants(),
-						'bg-emerald-600 text-lg hover:bg-emerald-500'
+						'bg-violet-600 text-lg hover:bg-violet-500'
 					)}
 				>
 					New Issue

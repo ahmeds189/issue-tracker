@@ -3,8 +3,8 @@ import { Inter } from 'next/font/google'
 import type { Metadata } from 'next'
 import { cn } from '@/lib/utils'
 import Navbar from '@/components/navbar'
+import { Toaster } from 'sonner'
 import './globals.css'
-import { Toaster } from '@/components/ui/toaster'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 			>
 				<Navbar />
 				<main className='flex-1 py-12'>{children}</main>
-				<Toaster />
+				<Toaster richColors position='top-center' />
 			</body>
 		</html>
 	)
