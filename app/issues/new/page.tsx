@@ -16,9 +16,8 @@ import { LoaderIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import SimpleMDE from 'react-simplemde-editor'
-import 'easymde/dist/easymde.min.css'
 import { toast } from 'sonner'
+import Tiptap from '@/components/Tiptap'
 
 type Inputs = z.infer<typeof newIssueSchema>
 
@@ -29,7 +28,7 @@ const NewIssue = () => {
 		resolver: zodResolver(newIssueSchema),
 		defaultValues: {
 			title: '',
-			description: '',
+			// description: ,
 		},
 	})
 
@@ -41,14 +40,15 @@ const NewIssue = () => {
 	} = form
 
 	const onSubmit = async (date: Inputs) => {
-		try {
-			await axios.post('/api/issues', date)
-			router.push('/issues')
-			toast.success('Issue has been created')
-			reset()
-		} catch (error) {
-			toast.error(`${error}`)
-		}
+		// try {
+		// 	await axios.post('/api/issues', date)
+		// 	router.push('/issues')
+		// 	toast.success('Issue has been created')
+		// 	reset()
+		// } catch (error) {
+		// 	toast.error(`${error}`)
+		// }
+		console.log(date)
 	}
 	return (
 		<Wrapper>
@@ -60,9 +60,9 @@ const NewIssue = () => {
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<Input placeholder='Title' {...field} />
+									<Input placeholder='issue title' {...field} />
 								</FormControl>
-								<div className='h-8 '>
+								<div className='h-8'>
 									<FormMessage />
 								</div>
 							</FormItem>
@@ -75,9 +75,9 @@ const NewIssue = () => {
 						render={({ field }) => (
 							<FormItem>
 								<FormControl>
-									<SimpleMDE placeholder='Description' {...field} />
+									<Tiptap description={field.value} onChange={field.onChange} />
 								</FormControl>
-								<div className='h-8 '>
+								<div className='h-8'>
 									<FormMessage />
 								</div>
 							</FormItem>

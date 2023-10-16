@@ -74,3 +74,8 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+.tiptap p.is-editor-empty:first-child::before {
+	content: attr(data-placeholder);
+	@apply h-0 pointer-events-none text-muted-foreground float-left;
+}
