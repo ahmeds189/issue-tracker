@@ -13,7 +13,11 @@ const Navbar = () => {
 		<nav className='shadow-sm py-4'>
 			<Wrapper className='flex items-center'>
 				<Link href='/'>
-					<img src='/issue.svg' alt='gear and alert logo' className='w-12' />
+					<img
+						src='/issue.svg'
+						alt='gear and alert logo'
+						className='w-12 dark:invert'
+					/>
 				</Link>
 				<ul className='flex items-center ml-auto space-x-6'>
 					{routes.map((route) => (
