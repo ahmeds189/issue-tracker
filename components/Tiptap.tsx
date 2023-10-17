@@ -1,12 +1,12 @@
 'use client'
 import Placeholder from '@tiptap/extension-placeholder'
-import { EditorContent, JSONContent, useEditor } from '@tiptap/react'
+import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Toolbar from './Toolbar'
 
 interface Props {
-	description: JSONContent
-	onChange: (richText: JSONContent) => void
+	description: string
+	onChange: (richText: string) => void
 }
 
 const Tiptap = ({ description, onChange }: Props) => {
@@ -16,6 +16,16 @@ const Tiptap = ({ description, onChange }: Props) => {
 				heading: {
 					HTMLAttributes: {
 						class: 'text-2xl font-bold',
+					},
+				},
+				bulletList: {
+					HTMLAttributes: {
+						class: 'bullet-list',
+					},
+				},
+				orderedList: {
+					HTMLAttributes: {
+						class: 'orderd-list',
 					},
 				},
 			}),
@@ -31,12 +41,12 @@ const Tiptap = ({ description, onChange }: Props) => {
 			},
 		},
 		onUpdate({ editor }) {
-			onChange(editor.getJSON())
+			onChange(editor.getHTML())
 		},
 	})
 
 	return (
-		<div className='flex flex-col space-y-4 h-60'>
+		<div className='flex flex-col space-y-2 h-60'>
 			<Toolbar editor={editor} />
 			<EditorContent editor={editor} className='flex-1 overflow-y-auto' />
 		</div>

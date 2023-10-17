@@ -77,5 +77,12 @@
 
 .tiptap p.is-editor-empty:first-child::before {
 	content: attr(data-placeholder);
-	@apply h-0 pointer-events-none text-muted-foreground float-left;
+	@apply pointer-events-none text-muted-foreground text-sm float-left;
+}
+
+.bullet-list {
+	@apply list-disc ml-5;
+}
+.orderd-list {
+	@apply list-decimal ml-5;
 }

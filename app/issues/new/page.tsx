@@ -5,6 +5,7 @@ import {
 	FormControl,
 	FormField,
 	FormItem,
+	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
@@ -28,7 +29,7 @@ const NewIssue = () => {
 		resolver: zodResolver(newIssueSchema),
 		defaultValues: {
 			title: '',
-			// description: ,
+			description: '',
 		},
 	})
 
@@ -40,31 +41,34 @@ const NewIssue = () => {
 	} = form
 
 	const onSubmit = async (date: Inputs) => {
-		// try {
-		// 	await axios.post('/api/issues', date)
-		// 	router.push('/issues')
-		// 	toast.success('Issue has been created')
-		// 	reset()
-		// } catch (error) {
-		// 	toast.error(`${error}`)
-		// }
-		console.log(date)
+		try {
+			await axios.post('/api/issues', date)
+			router.push('/issues')
+			toast.success('Issue has been created')
+			reset()
+		} catch (error) {
+			toast.error(`${error}`)
+		}
 	}
 	return (
 		<Wrapper>
 			<Form {...form}>
-				<form className='max-w-xl mx-auto' onSubmit={handleSubmit(onSubmit)}>
+				<form
+					className='max-w-xl mx-auto space-y-5'
+					onSubmit={handleSubmit(onSubmit)}
+				>
 					<FormField
 						control={control}
 						name='title'
 						render={({ field }) => (
 							<FormItem>
-								<FormControl>
-									<Input placeholder='issue title' {...field} />
-								</FormControl>
-								<div className='h-8'>
+								<FormLabel className='flex items-center justify-between'>
+									Title
 									<FormMessage />
-								</div>
+								</FormLabel>
+								<FormControl>
+									<Input placeholder='issue title ...' {...field} />
+								</FormControl>
 							</FormItem>
 						)}
 					/>
@@ -74,17 +78,18 @@ const NewIssue = () => {
 						name='description'
 						render={({ field }) => (
 							<FormItem>
+								<FormLabel className='flex items-center justify-between'>
+									Description
+									<FormMessage />
+								</FormLabel>
 								<FormControl>
 									<Tiptap description={field.value} onChange={field.onChange} />
 								</FormControl>
-								<div className='h-8'>
-									<FormMessage />
-								</div>
 							</FormItem>
 						)}
 					/>
 
-					<Button type='submit' disabled={isSubmitting}>
+					<Button type='submit' disabled={isSubmitting} className='w-1/3'>
 						{isSubmitting ? 'Submitting' : 'Submit'}
 						{isSubmitting && (
 							<LoaderIcon className='animate-spin ml-2' size={20} />

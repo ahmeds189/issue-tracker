@@ -1,7 +1,14 @@
 'use client'
 
 import { type Editor } from '@tiptap/react'
-import { Bold, Italic, Heading2, Strikethrough } from 'lucide-react'
+import {
+	Bold,
+	Italic,
+	Heading2,
+	Strikethrough,
+	List,
+	ListOrdered,
+} from 'lucide-react'
 import { Toggle } from './ui/toggle'
 
 interface Props {
@@ -9,7 +16,9 @@ interface Props {
 }
 
 const Toolbar = ({ editor }: Props) => {
-	if (!editor) return
+	if (!editor) {
+		return null
+	}
 
 	return (
 		<div className='border border-input rounded-md space-x-2 px-2 py-1'>
@@ -46,6 +55,22 @@ const Toolbar = ({ editor }: Props) => {
 				onPressedChange={() => editor.chain().focus().toggleStrike().run()}
 			>
 				<Strikethrough size={19} />
+			</Toggle>
+			<Toggle
+				size='sm'
+				aria-label='Toggle strike'
+				pressed={editor.isActive('bulletList')}
+				onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
+			>
+				<List />
+			</Toggle>
+			<Toggle
+				size='sm'
+				aria-label='Toggle strike'
+				pressed={editor.isActive('orderdList')}
+				onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
+			>
+				<ListOrdered />
 			</Toggle>
 		</div>
 	)
