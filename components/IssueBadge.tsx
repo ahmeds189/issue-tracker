@@ -1,37 +1,31 @@
 import { IssueStatus } from '@prisma/client'
 import { Badge } from './ui/badge'
 
-const IssueBadge = ({ status }: { status: IssueStatus }) => {
-	switch (status) {
-		case IssueStatus.CLOSED:
-			return (
-				<Badge
-					variant='outline'
-					className='font-medium rounded-sm bg-green-200 text-green-700'
-				>
-					closed
-				</Badge>
-			)
-
-		case IssueStatus.IN_PROGRESS:
-			return (
-				<Badge
-					variant='outline'
-					className='font-medium rounded-sm bg-purple-200 text-purple-700'
-				>
-					in progress
-				</Badge>
-			)
-
-		default:
-			return (
-				<Badge
-					variant='outline'
-					className='font-medium rounded-sm bg-red-200 text-red-700'
-				>
-					opened
-				</Badge>
-			)
+const statusMap: Record<
+	IssueStatus,
+	{
+		label: string
+		bg: 'bg-green-200' | 'bg-purple-200' | 'bg-red-200'
+		color: 'text-green-700' | 'text-purple-700' | 'text-red-700'
 	}
+> = {
+	IN_PROGRESS: {
+		label: 'in progress',
+		bg: 'bg-purple-200',
+		color: 'text-purple-700',
+	},
+	OPEN: { label: 'open', bg: 'bg-red-200', color: 'text-red-700' },
+	CLOSED: { label: 'closed', bg: 'bg-green-200', color: 'text-green-700' },
 }
+
+const IssueBadge = ({ status }: { status: IssueStatus }) => {
+	return (
+		<Badge
+			className={`rounded-sm ${statusMap[status].bg} ${statusMap[status].color}`}
+		>
+			{statusMap[status].label}
+		</Badge>
+	)
+}
+
 export default IssueBadge
