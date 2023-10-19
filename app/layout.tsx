@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
-		<html lang='en' className='dark'>
+		<html lang='en' className='light'>
 			<body className={cn('min-h-[100svh] flex flex-col', inter.className)}>
 				<Navbar />
 				<main className='flex-1 py-12'>{children}</main>
