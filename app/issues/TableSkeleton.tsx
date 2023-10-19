@@ -1,7 +1,6 @@
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableHead,
 	TableHeader,
@@ -13,10 +12,6 @@ const TableSkeleton = () => {
 	const issues = [1, 2, 3, 4, 5]
 	return (
 		<Table>
-			<TableCaption className='text-center'>
-				A list of your recent issues.
-			</TableCaption>
-
 			<TableHeader>
 				<TableRow>
 					<TableHead>Issue</TableHead>

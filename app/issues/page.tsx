@@ -1,6 +1,7 @@
 import IssuesTable from '@/app/issues/IssuesTable'
 import TableSkeleton from '@/app/issues/TableSkeleton'
 import { buttonVariants } from '@/components/ui/button'
+import { TableCaption } from '@/components/ui/table'
 import Wrapper from '@/components/wrapper'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
@@ -18,9 +19,14 @@ const Issue = () => {
 					New Issue
 				</Link>
 			</header>
-			<Suspense fallback={<TableSkeleton />}>
-				<IssuesTable />
-			</Suspense>
+			<div className='border border-input rounded-md'>
+				<Suspense fallback={<TableSkeleton />}>
+					<IssuesTable />
+				</Suspense>
+			</div>
+			<p className='mt-3 text-center text-muted-foreground text-sm'>
+				A list of your recent issues.
+			</p>
 		</Wrapper>
 	)
 }

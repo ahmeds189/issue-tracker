@@ -1,7 +1,6 @@
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableHead,
 	TableHeader,
@@ -15,10 +14,6 @@ const IssuesTable = async () => {
 
 	return (
 		<Table>
-			<TableCaption className='text-center'>
-				A list of your recent issues.
-			</TableCaption>
-
 			<TableHeader>
 				<TableRow>
 					<TableHead>Issue</TableHead>
